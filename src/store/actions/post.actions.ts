@@ -32,16 +32,16 @@ export const deletePostFailure = createAction(
 );
 
 export const listPosts = createAction(
-  '[Posts] Load Posts'
+  '[Posts] List Posts'
 );
 
 export const listPostsSuccess = createAction(
-  '[Posts] Load Posts Success',
+  '[Posts] List Posts Success',
   props<{ data: Post[] }>()
 );
 
 export const listPostsFailure = createAction(
-  '[Posts] Load Posts Failure',
+  '[Posts] List Posts Failure',
   props<{ error: any }>()
 );
 

@@ -1,0 +1,35 @@
+.list-table {
+  width: 100%;
+  border-collapse: collapse;
+  max-height: 60vh;
+  font-family: "Comic Sans MS";
+}
+
+.list-table th,
+.list-table td {
+  padding: 10px;
+  text-align: left;
+}
+
+.list-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.list-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.list-table tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.list-table button {
+  padding: 5px 10px;
+  color: #ff6347;
+  cursor: pointer;
+}
+
+.list-table button:hover {
+  transform: translateY(-2px);
+}
