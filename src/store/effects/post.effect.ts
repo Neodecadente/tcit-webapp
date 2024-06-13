@@ -3,14 +3,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as PostsActions from '../actions/post.actions';
-import { PostsService } from '../services/post.service';
+import { PostService } from '../services/post.service';
 import { AlertService } from '../../app/alert.service';
 
 @Injectable()
 export class PostsEffects {
   constructor(
     private actions$: Actions,
-    private postsService: PostsService,
+    private postService: PostService,
     private alertService: AlertService
   ) { }
 
@@ -18,7 +18,7 @@ export class PostsEffects {
     this.actions$.pipe(
       ofType(PostsActions.listPosts),
       mergeMap(() => {
-        return this.postsService.getPosts().pipe(
+        return this.postService.getPosts().pipe(
           map(data => {
             return PostsActions.listPostsSuccess({ data });
           }),
@@ -34,7 +34,7 @@ export class PostsEffects {
     this.actions$.pipe(
       ofType(PostsActions.createNewPost),
       mergeMap(({ post }) => {
-        return this.postsService.createPost(post).pipe(
+        return this.postService.createPost(post).pipe(
           map(data => {
             this.alertService.showAlert('Post creado correctamente', 'success');
             return PostsActions.createNewPostSuccess({ post: data });
@@ -59,7 +59,7 @@ export class PostsEffects {
     this.actions$.pipe(
       ofType(PostsActions.deletePost),
       mergeMap(({ post }) => {
-        return this.postsService.deletePost(post.id).pipe(
+        return this.postService.deletePost(post.id).pipe(
           map(() => {
             this.alertService.showAlert('Post eliminado correctamente', 'success');
             return PostsActions.deletePostSuccess({ post });
