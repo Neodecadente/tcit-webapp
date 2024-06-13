@@ -18,7 +18,7 @@ export const createNewPostFailure = createAction(
 
 export const deletePost = createAction(
   '[Posts] Delete Post',
-  props<{ id: number }>()
+  props<{ post: Post }>()
 );
 
 export const deletePostSuccess = createAction(

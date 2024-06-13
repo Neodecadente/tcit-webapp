@@ -26,4 +26,35 @@ export class PostsEffects {
         );
       })
     ));
+
+  createPost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostsActions.createNewPost),
+      mergeMap(({ post }) => {
+        return this.postsService.createPost(post).pipe(
+          map(data => {
+            return PostsActions.createNewPostSuccess({ post: data });
+          }),
+          catchError(error => {
+            return of(PostsActions.createNewPostFailure({ error }));
+          })
+        );
+      })
+    ));
+
+  deletePost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostsActions.deletePost),
+      mergeMap(({ post }) => {
+        return this.postsService.deletePost(post.id).pipe(
+          map(() => {
+            return PostsActions.deletePostSuccess({ post });
+          }),
+          catchError(error => {
+            return of(PostsActions.deletePostFailure({ error }));
+          })
+        );
+      })
+    ));
+    
 }

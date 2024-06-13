@@ -54,12 +54,10 @@ export class AppComponent implements OnInit {
   }
 
   onCreate(post: Post) {
-    this.posts.push(post);
-    this.onSearch('post'); // Update filtered posts
+    this.store.dispatch(PostActions.createNewPost({ post }));
   }
 
   onDelete(post: Post) {
-    this.posts = this.posts.filter(p => p !== post);
-    this.onSearch('post'); // Update filtered posts
+    this.store.dispatch(PostActions.deletePost({ post }));
   }
 }

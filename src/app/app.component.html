@@ -2,6 +2,6 @@
   <div class="content-box doodle-border">
     <app-post-filter (search)="onSearch($event)"></app-post-filter>
     <app-post-list [posts]="posts" (delete)="onDelete($event)"></app-post-list>
-    <app-post-form></app-post-form>
+    <app-post-form (create)="onCreate($event)"></app-post-form>
   </div>
 </div>

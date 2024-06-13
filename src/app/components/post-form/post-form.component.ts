@@ -15,7 +15,8 @@ export class PostFormComponent {
   @Output() create: EventEmitter<Post> = new EventEmitter<Post>();
 
   onCreate() {
-    const newPost: Post = { id: Date.now(), title: this.name, body: this.description };
+    console.log('post-form.component.ts - onCreate');
+    const newPost: Post = { id: Date.now(), nombre: this.name, descripcion: this.description };
     this.create.emit(newPost);
     this.name = '';
     this.description = '';

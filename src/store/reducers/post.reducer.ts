@@ -48,7 +48,7 @@ export const postsReducer = createReducer(
   })),
   on(PostsActions.filterPosts, (state, { filter }) => ({
     ...state,
-    filteredData: state.data.filter(post => post.title.includes(filter))
+    filteredData: state.data.filter(post => post.nombre.includes(filter))
   })),
   on(PostsActions.listPosts, (state) => ({
     ...state,
