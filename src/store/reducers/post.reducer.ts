@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import * as PostsActions from "../actions/posts.actions";
-import { Post } from "../models/posts.model";
+import * as PostsActions from "../actions/post.actions";
+import { Post } from "../models/post.model";
 
 export interface PostsState {
   data: Post[];
