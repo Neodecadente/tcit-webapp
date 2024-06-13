@@ -4,12 +4,14 @@ import { Post } from "../models/post.model";
 
 export interface PostsState {
   data: Post[];
+  filteredData: Post[];
   loading: boolean;
   error: any;
 }
 
 export const initialState: PostsState = {
   data: [],
+  filteredData: [],
   loading: false,
   error: null,
 };
@@ -44,9 +46,9 @@ export const postsReducer = createReducer(
     error,
     loading: false,
   })),
-  on(PostsActions.filterPosts, (state) => ({
+  on(PostsActions.filterPosts, (state, { filter }) => ({
     ...state,
-    loading: true,
+    filteredData: state.data.filter(post => post.title.includes(filter))
   })),
   on(PostsActions.listPosts, (state) => ({
     ...state,

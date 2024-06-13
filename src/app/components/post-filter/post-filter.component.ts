@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-post-filter',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './post-filter.component.html'
+  templateUrl: './post-filter.component.html',
+  styleUrls: ['./post-filter.component.css']
 })
 export class PostFilterComponent {
   filter: string = '';

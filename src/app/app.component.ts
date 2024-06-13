@@ -18,13 +18,14 @@ import { PostListComponent } from './components/post-list/post-list.component';
 })
 export class AppComponent implements OnInit {
   title = 'tcit-webapp';
-  posts: Post[] = [];
-  filteredPosts: Post[] = [];
 
   posts$: Observable<Post[]>;
+  posts: Post[] = [];
+  filteredPosts$: Observable<Post[]>;
 
   constructor(private store: Store<{ posts: Post[] }>) {
     this.posts$ = this.store.select(PostSelectors.selectAllPosts);
+    this.filteredPosts$ = this.store.select(PostSelectors.selectFilteredPosts);
   }
 
 
@@ -32,7 +33,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(PostActions.listPosts());
     this.posts$.subscribe({
       next: data => {
-        this.posts = data.slice(0, 10);
+        this.posts = data;
       },
       error: err => {
         console.error('Error subscribing to posts:', err);
@@ -41,7 +42,15 @@ export class AppComponent implements OnInit {
   }
 
   onSearch(filter: string) {
-    this.filteredPosts = this.posts.filter(post => post.title.includes(filter));
+    this.store.dispatch(PostActions.filterPosts({ filter }));
+    this.filteredPosts$.subscribe({
+      next: data => {
+        this.posts = data;
+      },
+      error: err => {
+        console.error('Error subscribing to posts:', err);
+      }
+    });
   }
 
   onCreate(post: Post) {

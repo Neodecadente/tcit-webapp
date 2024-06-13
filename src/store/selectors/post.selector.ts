@@ -7,3 +7,8 @@ export const selectAllPosts = createSelector(
   selectPostState,
   (state: PostsState) => state.data
 );
+
+export const selectFilteredPosts = createSelector(
+  selectPostState,
+  (state: PostsState) => state.filteredData
+);
