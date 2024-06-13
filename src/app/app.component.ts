@@ -8,16 +8,18 @@ import * as PostSelectors from '../store/selectors/post.selector';
 import { PostFormComponent } from './components/post-form/post-form.component';
 import { PostFilterComponent } from './components/post-filter/post-filter.component';
 import { PostListComponent } from './components/post-list/post-list.component';
+import { AlertBoxComponent } from './components/error/alert-box.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ CommonModule, PostFormComponent, PostFilterComponent, PostListComponent ],
+  imports: [CommonModule, PostFormComponent, PostFilterComponent, PostListComponent, AlertBoxComponent ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
   title = 'tcit-webapp';
+  errorMessage: string | null = null;
 
   posts$: Observable<Post[]>;
   posts: Post[] = [];
@@ -27,7 +29,6 @@ export class AppComponent implements OnInit {
     this.posts$ = this.store.select(PostSelectors.selectAllPosts);
     this.filteredPosts$ = this.store.select(PostSelectors.selectFilteredPosts);
   }
-
 
   ngOnInit() {
     this.store.dispatch(PostActions.listPosts());
@@ -59,5 +60,9 @@ export class AppComponent implements OnInit {
 
   onDelete(post: Post) {
     this.store.dispatch(PostActions.deletePost({ post }));
+  }
+
+  onError(error: string) {
+    this.store.dispatch(PostActions.formInputError({ error }));
   }
 }

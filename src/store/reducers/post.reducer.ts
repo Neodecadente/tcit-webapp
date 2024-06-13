@@ -32,6 +32,10 @@ export const postsReducer = createReducer(
     error,
     loading: false,
   })),
+  on(PostsActions.formInputError, (state, { error }) => ({
+    ...state,
+    error,
+  })),
   on(PostsActions.deletePost, (state) => ({
     ...state,
     loading: true,

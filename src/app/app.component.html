@@ -1,7 +1,8 @@
 <div class="container">
+  <app-alert-box></app-alert-box>
   <div class="content-box doodle-border">
     <app-post-filter (search)="onSearch($event)"></app-post-filter>
     <app-post-list [posts]="posts" (delete)="onDelete($event)"></app-post-list>
-    <app-post-form (create)="onCreate($event)"></app-post-form>
+    <app-post-form (create)="onCreate($event)" (error)="onError($event)"></app-post-form>
   </div>
 </div>

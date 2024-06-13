@@ -4,12 +4,14 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as PostsActions from '../actions/post.actions';
 import { PostsService } from '../services/post.service';
+import { AlertService } from '../../app/alert.service';
 
 @Injectable()
 export class PostsEffects {
   constructor(
     private actions$: Actions,
-    private postsService: PostsService
+    private postsService: PostsService,
+    private alertService: AlertService
   ) { }
 
   listPosts$ = createEffect(() =>
@@ -21,6 +23,7 @@ export class PostsEffects {
             return PostsActions.listPostsSuccess({ data });
           }),
           catchError(error => {
+            this.alertService.showAlert(`Error: ${error.message}`, 'error');
             return of(PostsActions.listPostsFailure({ error }));
           })
         );
@@ -33,14 +36,24 @@ export class PostsEffects {
       mergeMap(({ post }) => {
         return this.postsService.createPost(post).pipe(
           map(data => {
+            this.alertService.showAlert('Post creado correctamente', 'success');
             return PostsActions.createNewPostSuccess({ post: data });
           }),
           catchError(error => {
+            this.alertService.showAlert(`Error: ${error.message}`, 'error');
             return of(PostsActions.createNewPostFailure({ error }));
           })
         );
       })
     ));
+  
+  inputError$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostsActions.formInputError),
+      map(({ error }) => {
+        this.alertService.showAlert(error, 'error');
+      })
+    ), { dispatch: false });  
 
   deletePost$ = createEffect(() =>
     this.actions$.pipe(
@@ -48,13 +61,14 @@ export class PostsEffects {
       mergeMap(({ post }) => {
         return this.postsService.deletePost(post.id).pipe(
           map(() => {
+            this.alertService.showAlert('Post eliminado correctamente', 'success');
             return PostsActions.deletePostSuccess({ post });
           }),
           catchError(error => {
+            this.alertService.showAlert(`Error: ${error.message}`, 'error');
             return of(PostsActions.deletePostFailure({ error }));
           })
         );
       })
     ));
-    
 }

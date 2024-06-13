@@ -16,6 +16,11 @@ export const createNewPostFailure = createAction(
   props<{ error: any }>()
 );
 
+export const formInputError = createAction(
+  '[Post Form] Form Input Error',
+  props<{ error: string }>()
+);
+
 export const deletePost = createAction(
   '[Posts] Delete Post',
   props<{ post: Post }>()
